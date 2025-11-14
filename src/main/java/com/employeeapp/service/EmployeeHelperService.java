@@ -2,12 +2,14 @@ package com.employeeapp.service;
 
 import com.employeeapp.dto.EmployeeDto;
 import com.employeeapp.dto.EmployeeRequest;
+import com.employeeapp.repository.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 public class EmployeeHelperService {
     private final Map<Long, EmployeeDto> employeeStore = new HashMap<>();
     private long idCounter = 1;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public EmployeeDto addEmployee(EmployeeRequest req) {
         EmployeeDto emp = new EmployeeDto();
@@ -88,5 +93,10 @@ public class EmployeeHelperService {
     public List<EmployeeDto> auditEmployees() {
         // For demo, just return all employees
         return getAllEmployees();
+    }
+
+    public EmployeeDto findAllEmployees() {
+        employeeRepository.findAllEmployees();
+        throw new UnsupportedOperationException("Unimplemented method 'getEmployees'");
     }
 }

@@ -39,4 +39,9 @@ public class EmployeeInfoController {
     public int getActiveCount() {
         return helper.getActiveCount() + auditService.auditEmployees().size();
     }
+
+    @GetMapping("/findAllEmployees")
+    public EmployeeDto findAllEmployees() {
+        return helper.findAllEmployees();
+    }
 }
