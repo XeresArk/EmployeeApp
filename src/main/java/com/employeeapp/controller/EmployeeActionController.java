@@ -1,7 +1,7 @@
 package com.employeeapp.controller;
 
-import com.employeeapp.dto.EmployeeDto;
 import com.employeeapp.dto.EmployeeRequest;
+import com.employeeapp.entities.EmployeeEntity;
 import com.employeeapp.service.EmployeeHelperService;
 import com.employeeapp.service.EmployeeAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +25,22 @@ public class EmployeeActionController {
 
     // API 1: Add employee (uses helper, DTO, adminService)
     @PostMapping("/add")
-    public EmployeeDto addEmployee(@RequestBody EmployeeRequest req) {
-        EmployeeDto emp = helper.addEmployee(req);
+    public EmployeeEntity addEmployee(@RequestBody EmployeeRequest req) {
+        EmployeeEntity emp = helper.addEmployee(req);
         adminService.promoteEmployee(emp.getId(), "Staff"); // cross-service dependency
         return emp;
     }
 
     // API 2: Update employee (uses helper, DTO)
     @PutMapping("/update/{id}")
-    public EmployeeDto updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequest req) {
+    public EmployeeEntity updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequest req) {
         return helper.updateEmployee(id, req);
     }
 
     // API 3: Delete employee (calls info API for validation, uses adminService)
     @DeleteMapping("/delete/{id}")
     public boolean deleteEmployee(@PathVariable Long id) {
-        EmployeeDto emp = infoController.getEmployee(id); // cross-controller dependency
+        EmployeeEntity emp = infoController.getEmployee(id); // cross-controller dependency
         if (emp != null && emp.isActive()) {
             adminService.deactivateEmployee(id); // cross-service dependency
             return helper.deleteEmployee(id);

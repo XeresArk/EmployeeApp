@@ -1,7 +1,7 @@
 package com.employeeapp.controller;
 
-import com.employeeapp.dto.EmployeeDto;
 import com.employeeapp.service.EmployeeHelperService;
+import com.employeeapp.entities.EmployeeEntity;
 import com.employeeapp.service.EmployeeAuditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +22,14 @@ public class EmployeeInfoController {
 
     // API 1: Get employee info (uses helper, DTO)
     @GetMapping("/{id}")
-    public EmployeeDto getEmployee(@PathVariable Long id) {
+    public EmployeeEntity getEmployee(@PathVariable Long id) {
         return helper.getEmployee(id);
     }
 
     // API 2: Search employees by department (uses helper, DTO, auditService)
     @GetMapping("/search")
-    public List<EmployeeDto> searchEmployees(@RequestParam String department) {
-        List<EmployeeDto> audited = auditService.auditEmployees();
+    public List<EmployeeEntity> searchEmployees(@RequestParam String department) {
+        List<EmployeeEntity> audited = auditService.auditEmployees();
         // filter audited employees by department
         return audited.stream().filter(e -> e.getDepartment().equalsIgnoreCase(department)).toList();
     }
@@ -41,7 +41,7 @@ public class EmployeeInfoController {
     }
 
     @GetMapping("/findAllEmployees")
-    public EmployeeDto findAllEmployees() {
+    public List<EmployeeEntity> findAllEmployees() {
         return helper.findAllEmployees();
     }
 }

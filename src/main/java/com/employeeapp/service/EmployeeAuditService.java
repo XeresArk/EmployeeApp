@@ -1,7 +1,9 @@
 package com.employeeapp.service;
 
-import com.employeeapp.dto.EmployeeDto;
 import org.springframework.stereotype.Service;
+
+import com.employeeapp.entities.EmployeeEntity;
+
 import java.util.List;
 
 @Service
@@ -12,7 +14,7 @@ public class EmployeeAuditService {
         this.helper = helper;
     }
 
-    public List<EmployeeDto> auditEmployees() {
+    public List<EmployeeEntity> auditEmployees() {
         // Delegates to helper
         return helper.getAllEmployees();
     }

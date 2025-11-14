@@ -1,7 +1,7 @@
 package com.employeeapp.controller;
 
-import com.employeeapp.dto.EmployeeDto;
 import com.employeeapp.service.EmployeeHelperService;
+import com.employeeapp.entities.EmployeeEntity;
 import com.employeeapp.service.EmployeeAdminService;
 import com.employeeapp.service.EmployeeAuditService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class EmployeeAdminController {
 
     // API 3: Audit employees (uses auditService, helper, DTO)
     @GetMapping("/audit")
-    public List<EmployeeDto> auditEmployees() {
+    public List<EmployeeEntity> auditEmployees() {
         return auditService.auditEmployees();
     }
 }

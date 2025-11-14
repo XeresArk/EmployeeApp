@@ -1,7 +1,7 @@
 package com.employeeapp.service;
 
-import com.employeeapp.dto.EmployeeDto;
 import com.employeeapp.dto.EmployeeRequest;
+import com.employeeapp.entities.EmployeeEntity;
 import com.employeeapp.repository.EmployeeRepository;
 
 import java.util.ArrayList;
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeHelperService {
-    private final Map<Long, EmployeeDto> employeeStore = new HashMap<>();
+    private final Map<Long, EmployeeEntity> employeeStore = new HashMap<>();
     private long idCounter = 1;
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public EmployeeDto addEmployee(EmployeeRequest req) {
-        EmployeeDto emp = new EmployeeDto();
+    public EmployeeEntity addEmployee(EmployeeRequest req) {
+        EmployeeEntity emp = new EmployeeEntity();
         emp.setId(idCounter++);
         emp.setName(req.getName());
         emp.setDepartment(req.getDepartment());
@@ -32,8 +32,8 @@ public class EmployeeHelperService {
         return emp;
     }
 
-    public EmployeeDto updateEmployee(Long id, EmployeeRequest req) {
-        EmployeeDto emp = employeeStore.get(id);
+    public EmployeeEntity updateEmployee(Long id, EmployeeRequest req) {
+        EmployeeEntity emp = employeeStore.get(id);
         if (emp != null) {
             emp.setName(req.getName());
             emp.setDepartment(req.getDepartment());
@@ -42,13 +42,13 @@ public class EmployeeHelperService {
         return emp;
     }
 
-    public EmployeeDto getEmployee(Long id) {
+    public EmployeeEntity getEmployee(Long id) {
         return employeeStore.get(id);
     }
 
-    public List<EmployeeDto> searchEmployees(String department) {
-        List<EmployeeDto> result = new ArrayList<>();
-        for (EmployeeDto emp : employeeStore.values()) {
+    public List<EmployeeEntity> searchEmployees(String department) {
+        List<EmployeeEntity> result = new ArrayList<>();
+        for (EmployeeEntity emp : employeeStore.values()) {
             if (emp.getDepartment().equalsIgnoreCase(department)) {
                 result.add(emp);
             }
@@ -57,7 +57,7 @@ public class EmployeeHelperService {
     }
 
     public boolean deactivateEmployee(Long id) {
-        EmployeeDto emp = employeeStore.get(id);
+        EmployeeEntity emp = employeeStore.get(id);
         if (emp != null) {
             emp.setActive(false);
             return true;
@@ -66,7 +66,7 @@ public class EmployeeHelperService {
     }
 
     public boolean promoteEmployee(Long id, String newRole) {
-        EmployeeDto emp = employeeStore.get(id);
+        EmployeeEntity emp = employeeStore.get(id);
         if (emp != null) {
             emp.setRole(newRole);
             return true;
@@ -78,25 +78,24 @@ public class EmployeeHelperService {
         return employeeStore.remove(id) != null;
     }
 
-    public List<EmployeeDto> getAllEmployees() {
+    public List<EmployeeEntity> getAllEmployees() {
         return new ArrayList<>(employeeStore.values());
     }
 
     public int getActiveCount() {
         int count = 0;
-        for (EmployeeDto emp : employeeStore.values()) {
+        for (EmployeeEntity emp : employeeStore.values()) {
             if (emp.isActive()) count++;
         }
         return count;
     }
 
-    public List<EmployeeDto> auditEmployees() {
+    public List<EmployeeEntity> auditEmployees() {
         // For demo, just return all employees
         return getAllEmployees();
     }
 
-    public EmployeeDto findAllEmployees() {
-        employeeRepository.findAllEmployees();
-        throw new UnsupportedOperationException("Unimplemented method 'getEmployees'");
+    public List<EmployeeEntity> findAllEmployees() {
+        return employeeRepository.findAllEmployees();
     }
 }
