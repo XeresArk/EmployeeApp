@@ -19,7 +19,7 @@ public class EmployeeHelperService {
     private long idCounter = 1;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    EmployeeRepository employeeRepository;
 
     public EmployeeEntity addEmployee(EmployeeRequest req) {
         EmployeeEntity emp = new EmployeeEntity();
