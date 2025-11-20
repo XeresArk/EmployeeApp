@@ -12,6 +12,6 @@ import com.employeeapp.entities.EmployeeEntity;
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
 	// You can add custom query methods here if needed
 
-	@Query(value = "SELECT id, name, department FROM employee", nativeQuery = true)
+	@Query(value = "SELECT * FROM employee", nativeQuery = true)
 	List<EmployeeEntity> findAllEmployees();
 }
