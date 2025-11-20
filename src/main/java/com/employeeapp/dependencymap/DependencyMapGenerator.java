@@ -26,7 +26,7 @@ public class DependencyMapGenerator implements CommandLineRunner {
         }
         // Output JSON
         ObjectMapper mapper = new ObjectMapper();
-        String outPath = "D:/Work/DependencyMap/dependency-map.json";
+        String outPath = "./dependency-map.json";
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File(outPath), map.toJson());
         System.out.println("Dependency map generated: " + outPath);
     }

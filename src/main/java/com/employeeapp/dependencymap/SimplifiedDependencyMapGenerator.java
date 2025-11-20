@@ -80,7 +80,7 @@ public class SimplifiedDependencyMapGenerator implements CommandLineRunner {
     public void generateDependencyMapToFile() throws Exception {
         List<Map<String, Object>> classList = generateDependencyMap();
         ObjectMapper mapper = new ObjectMapper();
-        String outPath = "D:/Work/DependencyMap/simplifiedDependencyMap.json";
+        String outPath = "./simplifiedDependencyMap.json";
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File(outPath), classList);
         System.out.println("Simplified dependency map generated: " + outPath);
     }
